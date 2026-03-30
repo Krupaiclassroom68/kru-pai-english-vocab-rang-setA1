@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Galaxy Sound Clash – A2 Set 2</title>
+<style>
+:root{
+  --bg:#030712;--bg2:#0f172a;--panel:rgba(5,10,27,.82);--line:rgba(88,216,255,.30);
+  --neon:#58d8ff;--neon2:#9b6bff;--good:#38f2b4;--warn:#ffb84d;--bad:#ff5f86;--text:#e9f7ff;--muted:#9dc7d8;
+  --shadow:0 24px 60px rgba(0,0,0,.48);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;color:var(--text);overflow-x:hidden;
+background:
+radial-gradient(circle at 18% 20%, rgba(88,216,255,.11), transparent 24%),
+radial-gradient(circle at 82% 14%, rgba(155,107,255,.12), transparent 20%),
+radial-gradient(circle at 50% 78%, rgba(60,130,255,.11), transparent 25%),
+linear-gradient(135deg,var(--bg),var(--bg2));}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:
+linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+background-size:42px 42px;opacity:.4}
+body::after{content:"";position:fixed;inset:-10% -10%;pointer-events:none;
+background:conic-gradient(from 90deg at 50% 50%, transparent 0 15%, rgba(88,216,255,.05) 20%, transparent 26%, rgba(155,107,255,.05) 32%, transparent 40%, rgba(88,216,255,.03) 48%, transparent 60%, rgba(155,107,255,.04) 70%, transparent 100%);
+mix-blend-mode:screen;animation:spinAura 30s linear infinite;opacity:.65;filter:blur(30px)}
+@keyframes spinAura{to{transform:rotate(360deg)}}
+.stars,.planets,.beams{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;opacity:.75;box-shadow:0 0 8px #fff;animation:twinkle linear infinite}
+@keyframes twinkle{0%,100%{opacity:.18;transform:scale(.8)}50%{opacity:.95;transform:scale(1.5)}}
+.planet{position:absolute;border-radius:50%;filter:drop-shadow(0 0 22px rgba(88,216,255,.24));opacity:.92;animation:floatPlanet ease-in-out infinite}
+.planet::after{content:"";position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle at 35% 35%, rgba(255,255,255,.42), transparent 30%)}
+.planet.p1{width:170px;height:170px;left:-30px;top:12%;background:radial-gradient(circle at 30% 30%, #8ff7ff, #2a8dff 52%, #071e4a 80%);animation-duration:14s}
+.planet.p2{width:120px;height:120px;right:6%;top:8%;background:radial-gradient(circle at 36% 36%, #e9beff, #8b5cf6 56%, #2a1454 80%);animation-duration:12s}
+.planet.p3{width:240px;height:240px;right:-60px;bottom:12%;background:radial-gradient(circle at 34% 34%, #c7ffb7, #3ecf8e 52%, #083b34 80%);animation-duration:18s}
+.planet.p4{width:84px;height:84px;left:10%;bottom:10%;background:radial-gradient(circle at 35% 35%, #ffe29a, #ff9f43 58%, #5a2600 84%);animation-duration:10s}
+.planet.ring::before{content:"";position:absolute;left:-18%;right:-18%;top:42%;height:22%;border:2px solid rgba(255,255,255,.45);border-radius:50%;transform:rotate(-16deg)}
+@keyframes floatPlanet{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.beam{position:absolute;inset:auto auto 0 0;width:55vw;height:2px;background:linear-gradient(90deg, transparent, rgba(88,216,255,.28), transparent);filter:blur(1px);transform:rotate(-14deg);animation:beamMove 12s linear infinite}
+.beam.b2{top:18%;left:28%;width:40vw;animation-delay:-4s;transform:rotate(11deg)}
+.beam.b3{top:74%;left:10%;width:35vw;animation-delay:-8s;transform:rotate(-8deg)}
+@keyframes beamMove{0%{transform:translateX(-20vw) rotate(-14deg)}100%{transform:translateX(110vw) rotate(-14deg)}}
+.container{position:relative;z-index:1;max-width:1220px;margin:0 auto;padding:14px}
+.screen{display:none;min-height:100vh;align-items:center;justify-content:center;padding:6px 0 18px}.screen.active{display:flex}
+.panel{width:min(100%,1120px);background:linear-gradient(180deg, rgba(8,16,36,.84), rgba(6,12,28,.92));border:1px solid rgba(88,216,255,.24);border-radius:34px;box-shadow:var(--shadow), inset 0 0 0 1px rgba(255,255,255,.04);padding:18px 18px 16px;position:relative;overflow:hidden}
+.panel::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg, transparent 0 32%, rgba(255,255,255,.08) 44%, transparent 56%);transform:translateX(-130%);animation:shine 9s linear infinite;pointer-events:none}
+@keyframes shine{to{transform:translateX(130%)}}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center;min-height:74vh}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(88,216,255,.22);font-weight:900;color:#d9f9ff;box-shadow:0 0 20px rgba(88,216,255,.08)}
+h1{margin:.35rem 0 .7rem;font-size:clamp(2rem,5vw,4.15rem);line-height:.94;letter-spacing:.02em;text-transform:uppercase}.glow{color:var(--neon);text-shadow:0 0 18px rgba(88,216,255,.4)}
+.sub{font-size:clamp(1rem,2vw,1.22rem);line-height:1.72;color:var(--muted)}
+.note-row,.name-row,.actions,.hud,.summary-actions{display:flex;gap:10px;flex-wrap:wrap}.name-row{margin-top:16px}
+.chip,.pill{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(88,216,255,.18);font-weight:900}
+input[type="text"]{flex:1;min-width:230px;background:rgba(255,255,255,.06);color:var(--text);border:1px solid rgba(88,216,255,.2);border-radius:18px;padding:15px 16px;font-size:1.05rem;font-weight:800;outline:none}
+.btn{border:none;border-radius:18px;padding:14px 18px;font-size:1rem;font-weight:1000;cursor:pointer;transition:transform .14s ease, box-shadow .14s ease, filter .14s ease;color:white;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:scale(.98)}
+.btn-primary{background:linear-gradient(180deg,#59e8ff,#168dff)}
+.btn-secondary{background:linear-gradient(180deg,#b77dff,#7a42ff)}
+.btn-green{background:linear-gradient(180deg,#59ffc0,#12b981);color:#032e1e}
+.btn-warn{background:linear-gradient(180deg,#ffe394,#ffbb33);color:#5d3500}
+.btn-ghost{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
+.feature-grid,.tips-grid,.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.card,.tip,.summary-card{background:rgba(255,255,255,.05);border-radius:22px;border:1px solid rgba(255,255,255,.09);padding:15px 16px;line-height:1.7}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}.hud{align-items:center}.pill{box-shadow:0 0 14px rgba(88,216,255,.1)}
+.listen-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.progress-wrap{background:rgba(255,255,255,.06);border:1px solid rgba(88,216,255,.16);padding:14px;border-radius:22px;margin-bottom:12px}.progress-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}.progress-title{font-weight:1000}.progress-bar{height:16px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden;border:1px solid rgba(255,255,255,.08)}.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--neon),var(--neon2));box-shadow:0 0 20px rgba(88,216,255,.44);transition:width .35s ease}
+.mission-flow{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.mission-step{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-weight:900}.mission-step.active{border-color:rgba(88,216,255,.44);box-shadow:0 0 16px rgba(88,216,255,.15)}
+.arena{position:relative;height:min(64vh,660px);min-height:470px;margin-top:8px;border-radius:28px;overflow:hidden;background:radial-gradient(circle at 50% 50%, rgba(88,216,255,.08), transparent 32%),linear-gradient(180deg, rgba(4,11,28,.84), rgba(2,6,17,.96));border:1px solid rgba(88,216,255,.22)}
+.arena::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 10% 15%, rgba(255,255,255,.08), transparent 10%),radial-gradient(circle at 86% 18%, rgba(155,107,255,.14), transparent 10%),radial-gradient(circle at 80% 80%, rgba(88,216,255,.10), transparent 12%),radial-gradient(circle at 20% 76%, rgba(255,220,120,.08), transparent 12%);pointer-events:none}
+.arena::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent, rgba(88,216,255,.035), transparent);animation:radar 3.5s linear infinite;pointer-events:none}@keyframes radar{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+.orb{position:absolute;width:202px;height:202px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;font-size:clamp(1.32rem,4.2vw,2.2rem);font-weight:1000;color:#fff;cursor:pointer;user-select:none;touch-action:manipulation;border:2px solid rgba(255,255,255,.24);box-shadow:0 0 34px rgba(88,216,255,.42), inset 0 0 26px rgba(255,255,255,.14);background:radial-gradient(circle at 30% 28%, rgba(255,255,255,.9), rgba(255,255,255,.15) 18%, transparent 19%),radial-gradient(circle at 35% 35%, #6cf2ff, #0b8dff 58%, #071a43 78%);transition:transform .14s ease, filter .14s ease, opacity .3s ease;backdrop-filter:blur(4px)}
+.orb:nth-child(2n){background:radial-gradient(circle at 30% 28%, rgba(255,255,255,.9), rgba(255,255,255,.15) 18%, transparent 19%),radial-gradient(circle at 35% 35%, #dcb4ff, #8b5cf6 58%, #260d56 78%)}
+.orb:nth-child(3n){background:radial-gradient(circle at 30% 28%, rgba(255,255,255,.9), rgba(255,255,255,.15) 18%, transparent 19%),radial-gradient(circle at 35% 35%, #a4ffd8, #00c08b 58%, #03392b 78%)}
+.orb:hover{filter:brightness(1.08)}.orb::after{content:"";position:absolute;inset:-10%;border-radius:50%;border:1px solid rgba(255,255,255,.08);box-shadow:0 0 24px rgba(255,255,255,.08), inset 0 0 18px rgba(255,255,255,.06)}
+.orb-label{position:relative;z-index:2;text-shadow:0 2px 10px rgba(0,0,0,.45);font-size:1.06em;line-height:1.08}.orb .trail{position:absolute;inset:auto 8% 8% auto;width:28%;height:28%;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,.5), transparent 70%);filter:blur(8px);opacity:.5}
+.choice-badge{position:absolute;top:9px;left:10px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.9);color:#0b3558;font-size:.92rem;font-weight:1000;z-index:3;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.orb.locked{pointer-events:none;opacity:.35;filter:grayscale(.3)}
+.orb.burst{animation:burst .55s ease forwards}@keyframes burst{0%{transform:translate(var(--tx),var(--ty)) scale(1);opacity:1}40%{transform:translate(var(--tx),var(--ty)) scale(1.13)}100%{transform:translate(var(--tx),var(--ty)) scale(1.5);opacity:0;filter:blur(3px)}}
+.burst-core{position:absolute;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:1000;pointer-events:none;background:radial-gradient(circle,#fff,rgba(88,216,255,.9),rgba(88,216,255,0));box-shadow:0 0 30px rgba(88,216,255,.35);animation:core .45s ease forwards}@keyframes core{0%{transform:scale(.2);opacity:0}60%{transform:scale(1.1);opacity:1}100%{transform:scale(.95);opacity:1}}
+.meaning-burst{position:absolute;display:grid;gap:10px;width:min(240px,70vw);z-index:8;animation:rise .25s ease}.meaning-btn{padding:12px 14px;border-radius:18px;border:1px solid rgba(88,216,255,.25);background:rgba(7,17,34,.94);color:var(--text);font-weight:1000;cursor:pointer;box-shadow:0 0 18px rgba(88,216,255,.16)}.meaning-btn:hover{transform:translateY(-1px)}
+@keyframes rise{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.center-hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(90%,540px);text-align:center;padding:14px 18px;border-radius:24px;background:rgba(4,12,28,.55);border:1px solid rgba(88,216,255,.15);backdrop-filter:blur(4px);font-weight:900;color:#d6f7ff;z-index:1}
+.feedback{display:none}.small{font-size:.94rem;color:var(--muted)}
+.control-bar{display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:14px;padding-bottom:4px}.control-bar .btn{min-width:118px;box-shadow:0 10px 22px rgba(0,0,0,.26)}
+.word-list{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.word-chip{padding:10px 12px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(88,216,255,.18);font-weight:900}.word-chip.seen{border-color:rgba(56,242,180,.34);box-shadow:0 0 16px rgba(56,242,180,.12);color:var(--good)}
+#overlay{position:fixed;inset:0;display:grid;place-items:center;pointer-events:none;z-index:25}#overlay span{font-size:min(28vw,180px);transform:scale(.2);opacity:0;text-shadow:0 0 26px rgba(255,255,255,.25)}#overlay.show span{animation:pop .95s ease forwards}@keyframes pop{0%{transform:scale(.25);opacity:0}18%{transform:scale(1.18);opacity:1}50%{transform:scale(1)}100%{transform:scale(.88) translateY(-12px);opacity:0}}
+.home-btn{position:absolute;top:16px;right:16px;z-index:12;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(88,216,255,.24);color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:0 0 18px rgba(88,216,255,.14)}
+.score-big{font-size:clamp(2.2rem,7vw,4.3rem);font-weight:1000;color:var(--neon);text-shadow:0 0 18px rgba(88,216,255,.46);text-align:center}
+#bigTimer{position:absolute;top:14px;right:82px;z-index:14;min-width:92px;padding:10px 16px;border-radius:22px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(7,20,42,.92),rgba(5,12,28,.98));border:1px solid rgba(88,216,255,.34);box-shadow:0 0 22px rgba(88,216,255,.18), inset 0 0 0 1px rgba(255,255,255,.05);font-size:clamp(2rem,4.8vw,3.45rem);font-weight:1000;line-height:1;color:var(--neon);text-shadow:0 0 18px rgba(88,216,255,.55);letter-spacing:.03em;transition:transform .18s ease,color .18s ease,box-shadow .18s ease,border-color .18s ease}
+#bigTimer.timer-warn{color:var(--warn);border-color:rgba(255,184,77,.42);box-shadow:0 0 24px rgba(255,184,77,.18), inset 0 0 0 1px rgba(255,255,255,.05)}
+#bigTimer.timer-danger{color:var(--bad);border-color:rgba(255,95,134,.48);box-shadow:0 0 28px rgba(255,95,134,.28), inset 0 0 0 1px rgba(255,255,255,.05);animation:timerPulse .55s ease-in-out infinite}
+@keyframes timerPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@media (max-width:950px){.hero,.feature-grid,.summary-grid,.tips-grid,.word-list{grid-template-columns:1fr}.arena{height:56vh;min-height:500px}.orb{width:148px;height:148px;padding:14px;font-size:1.15rem}.topbar{align-items:flex-start}#bigTimer{right:72px;top:12px;min-width:80px;padding:9px 14px}.home-btn{width:48px;height:48px}}
+@media (max-width:560px){.container{padding:10px}.panel{padding:14px 12px 14px;border-radius:24px}.screen{padding:0}.hero{min-height:auto}.arena{height:52vh;min-height:420px}.orb{width:116px;height:116px;padding:12px;font-size:1rem}.choice-badge{width:30px;height:30px;font-size:.84rem}.chip,.pill{padding:8px 11px;font-size:.88rem}.btn{padding:13px 15px;border-radius:16px}.progress-wrap{padding:12px}.meaning-burst{width:min(240px,82vw)}#bigTimer{top:10px;right:64px;min-width:68px;padding:8px 12px;border-radius:18px;font-size:clamp(1.75rem,8vw,2.4rem)}.home-btn{top:10px;right:10px}.control-bar{position:sticky;bottom:8px;z-index:20;background:linear-gradient(180deg,rgba(1,9,28,0),rgba(1,9,28,.94) 28%,rgba(1,9,28,.98));padding-top:14px;margin-top:8px}.control-bar .btn{min-width:92px;flex:1 1 28%}}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="beams"><div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div></div>
+<div class="planets"><div class="planet p1 ring"></div><div class="planet p2"></div><div class="planet p3 ring"></div><div class="planet p4"></div></div>
+<div id="overlay"><span id="overlayEmoji">🚀</span></div>
+<div class="container">
+  <section id="screenStart" class="screen active">
+    <div class="panel">
+      <div class="hero">
+        <div>
+          <div class="badge">🌌 A2 Sound Clash • Set 2 • 40 คำคลัง • สุ่ม 30 คำ • 11s Time Attack</div>
+          <h1><span class="glow">Galaxy Sound Clash</span><br>Set 2 <span style="color:#fff">ULTRA</span></h1>
+          <div class="sub">เกมฝึกฟังคำศัพท์ภาษาอังกฤษ โดยผู้เล่นฟังเสียงแล้วเลือกคำให้ตรงกับเสียง จากนั้นเลือกความหมายที่ถูกต้องภายในพื้นที่เล่นเดียวกัน เพื่อให้ใช้งานได้สะดวกทั้งบนมือถือและจอขนาดใหญ่</div>
+          <div class="note-row"><span class="chip">⚛️ 40 คำเต็มคลัง</span><span class="chip">🎧 ฟังคำแล้วกดบอล</span><span class="chip">💥 Genie Burst ความหมายโผล่จากลูกเดิม</span></div>
+          <div class="name-row">
+            <input id="playerName" type="text" placeholder="ใส่ชื่อนักสำรวจเสียงตรงนี้จ้า" />
+            <button class="btn btn-ghost" id="btnHow">วิธีเล่น</button>
+            <button class="btn btn-primary" id="btnStart">เริ่มภารกิจ</button>
+          </div>
+        </div>
+        <div class="feature-grid">
+          <div class="card">💥 <b>บอลสะบัดจริง</b><br>ใช้สนามและลูกบอลสไตล์เดียวกับ A1 Set 2 ให้ฟีลน่ากดและเร้าใจเหมือนเดิม</div>
+          <div class="card">🎧 <b>ฟังก่อนกด</b><br>กด Listen หรือ Slow แล้วเลือกคำที่ตรงกับเสียง</div>
+          <div class="card">🧞 <b>Genie Burst</b><br>พอเลือกถูก บอลจะแตก แล้วความหมายจะพุ่งออกมาจากลูกเดิมทันที</div>
+          <div class="card">🏠 <b>มี Home</b><br>กลับหน้าแรกได้ตลอด ไม่ค้าง ไม่หลง</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screenHow" class="screen">
+    <div class="panel">
+      <div class="badge">🛰️ Mission Guide</div>
+      <h1 style="font-size:clamp(1.8rem,4vw,3rem)"><span class="glow">วิธีเล่น</span> Sound Clash</h1>
+      <div class="tips-grid">
+        <div class="tip">1) ในแต่ละข้อจะมี <b>ลูกบอลคำศัพท์ 4 ลูก</b> ลอยวิ่งอยู่ในสนามเหมือน A1 Set 2</div>
+        <div class="tip">2) กด <b>Listen</b> หรือ <b>Slow</b> เพื่อฟังเสียงคำศัพท์เป้าหมาย</div>
+        <div class="tip">3) ถ้าเลือกคำถูก ลูกบอลนั้นจะ <b>แตกเป็น Genie Burst</b> แล้วมีความหมาย 3 ตัวเลือกโผล่ออกมาจากจุดเดิม</div>
+        <div class="tip">4) เลือกความหมายถูก = <b>2 คะแนน</b> / ถ้ากดคำผิดหรือหมดเวลา = <b>0 คะแนน</b></div>
+        <div class="tip">5) เกมจะใช้ <b>คำคลัง 40 คำ</b> แต่สุ่มมาเล่นจริง 30 คำ เพื่อให้เล่นซ้ำได้ไม่จำแพตเทิร์น</div>
+        <div class="tip">6) ต่อข้อมีเวลา <b>11 วินาที</b> รวมทั้งฟัง + เลือกคำ + เลือกความหมาย และกดฟังซ้ำได้ถ้าไม่ชัด</div>
+      </div>
+      <div class="actions" style="margin-top:16px;justify-content:center">
+        <button class="btn btn-ghost" id="btnBackHome">กลับหน้าแรก</button>
+        <button class="btn btn-primary" id="btnStart2">เริ่มเลย</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="screenGame" class="screen">
+    <div class="panel">
+      <button class="home-btn" id="btnHome" aria-label="home">🏠</button>
+      <div id="bigTimer" aria-live="polite">11</div>
+      <div class="topbar">
+        <div class="hud">
+          <div class="pill" id="hudName">👤 Explorer: -</div>
+          <div class="pill" id="hudRound">🪐 Signal 1 / 30</div>
+          <div class="pill" id="hudScore">⭐ Score 0 / 60</div>
+          
+        </div>
+
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-head">
+          <div>
+            <div class="progress-title" id="progressLabel">Mission Progress 0%</div>
+            <div class="small" id="missionState">🎧 ฟังเสียงแล้วกดบอลให้ตรงคำ</div>
+          </div>
+          <div class="pill" id="progressCount">0 / 30</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="mission-flow">
+          <div class="mission-step">A1 Review</div>
+          <div class="mission-step active">A2 Sound Clash</div>
+          <div class="mission-step">A3 Sentence Builder</div>
+        </div>
+      </div>
+      <div class="arena" id="arena">
+        <div class="center-hint" id="centerHint" style="display:none"></div>
+      </div>
+      <div class="control-bar fixed-mobile-controls">
+        <button class="btn btn-secondary" id="btnListen">🔊 Listen</button>
+        <button class="btn btn-warn" id="btnSlow">🐢 Slow</button>
+        <button class="btn btn-ghost" id="btnNext" style="display:none">ข้อถัดไป</button>
+      </div>
+      <div class="feedback" id="feedback">พร้อมแล้วค่อยกดฟังนะจ๊ะ</div>
+    </div>
+  </section>
+
+  <section id="screenSummary" class="screen">
+    <div class="panel">
+      <div class="badge">🏁 Mission Complete</div>
+      <h1 style="font-size:clamp(1.8rem,4vw,3.2rem)"><span class="glow">A2 Summary</span> Set 2</h1>
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="small" style="text-align:center">ผู้เล่น</div>
+          <div class="score-big" id="sumName">Galaxy Explorer</div>
+          <div class="score-big" id="sumScore">0 / 60</div>
+          <div class="small" id="sumText" style="text-align:center">เยี่ยมมาก</div>
+        </div>
+        <div class="summary-card">
+          <div class="word-list" id="summaryWords"></div>
+        </div>
+      </div>
+      <div class="summary-actions" style="justify-content:center;margin-top:16px">
+        <button class="btn btn-ghost" id="btnAgain">เล่นอีกครั้ง</button>
+        <button class="btn btn-primary" id="btnHome2">กลับหน้าแรก</button>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+const pool = [
+  {word:"wake",thai:"ตื่น"},{word:"get up",thai:"ลุกขึ้น"},{word:"brush",thai:"แปรง"},{word:"wash",thai:"ล้าง"},{word:"eat",thai:"กิน"},{word:"drink",thai:"ดื่ม"},{word:"go",thai:"ไป"},{word:"come",thai:"มา"},{word:"sleep",thai:"นอน"},{word:"rest",thai:"พักผ่อน"},
+  {word:"run",thai:"วิ่ง"},{word:"walk",thai:"เดิน"},{word:"jump",thai:"กระโดด"},{word:"play",thai:"เล่น"},{word:"study",thai:"เรียน"},{word:"read",thai:"อ่าน"},{word:"write",thai:"เขียน"},{word:"draw",thai:"วาดรูป"},{word:"watch",thai:"ดู"},{word:"listen",thai:"ฟัง"},
+  {word:"talk",thai:"คุย"},{word:"speak",thai:"พูด"},{word:"ask",thai:"ถาม"},{word:"answer",thai:"ตอบ"},{word:"call",thai:"โทรหา"},{word:"help",thai:"ช่วย"},{word:"give",thai:"ให้"},{word:"take",thai:"เอา / นำไป"},{word:"meet",thai:"พบ"},{word:"visit",thai:"ไปเยี่ยม"},
+  {word:"make",thai:"ทำ / สร้าง"},{word:"do",thai:"ทำ"},{word:"have",thai:"มี / กิน"},{word:"get",thai:"ได้รับ / เอา"},{word:"keep",thai:"เก็บ / รักษา"},{word:"bring",thai:"นำมา"},{word:"buy",thai:"ซื้อ"},{word:"find",thai:"หาเจอ"},{word:"think",thai:"คิด"},{word:"feel",thai:"รู้สึก"}
+];
+const $=id=>document.getElementById(id);
+let selectedVoice=null, player='Galaxy Explorer', gameSet=[], currentIndex=0, score=0, state='idle', currentQ=null, orbs=[], animId=0, answeredWords=[], timeLeft=11, timerInterval=null, beepCtx=null;
+const arena=$('arena');
+
+function shuffle(a){ const arr=[...a]; for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]];} return arr; }
+function showScreen(id){['screenStart','screenHow','screenGame','screenSummary'].forEach(s=>$(s).classList.remove('active')); $(id).classList.add('active');}
+function initStars(){ const wrap=$('stars'); for(let i=0;i<90;i++){ const s=document.createElement('span'); s.className='star'; s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%'; const size=Math.random()*2.6+1; s.style.width=s.style.height=size+'px'; s.style.animationDuration=(Math.random()*3+2)+'s'; s.style.animationDelay=(Math.random()*2)+'s'; wrap.appendChild(s);} }
+function overlay(symbol){ const wrap=$('overlay'), em=$('overlayEmoji'); em.textContent=symbol; wrap.classList.remove('show'); void wrap.offsetWidth; wrap.classList.add('show'); }
+function loadVoices(){ const voices=speechSynthesis.getVoices(); if(!voices.length) return; selectedVoice = voices.find(v=>/en-US|en_GB|en-GB/i.test(v.lang)) || voices.find(v=>/en/i.test(v.lang)) || voices[0]; }
+speechSynthesis.onvoiceschanged = loadVoices; loadVoices();
+function speak(word, rate=.82){ speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(word); u.lang='en-US'; u.rate=rate; u.pitch=1.02; if(selectedVoice) u.voice=selectedVoice; speechSynthesis.speak(u); }
+function clickSound(freq=700,d=.06,vol=.02,type='triangle'){ try{ const ctx=new (window.AudioContext||window.webkitAudioContext)(); const o=ctx.createOscillator(), g=ctx.createGain(); o.type=type; o.frequency.value=freq; g.gain.value=vol; o.connect(g); g.connect(ctx.destination); o.start(); g.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime+d); o.stop(ctx.currentTime+d);}catch(e){} }
+function successSound(){ clickSound(780,.08,.03,'triangle'); setTimeout(()=>clickSound(1060,.12,.03,'triangle'),90); }
+function failSound(){ clickSound(230,.12,.03,'sawtooth'); setTimeout(()=>clickSound(180,.16,.026,'sawtooth'),90); }
+
+function tickBeep(){
+  try{
+    if(!beepCtx) beepCtx = new (window.AudioContext||window.webkitAudioContext)();
+    const ctx=beepCtx, o=ctx.createOscillator(), g=ctx.createGain();
+    o.type='square'; o.frequency.value=980; g.gain.value=.0001;
+    o.connect(g); g.connect(ctx.destination); o.start();
+    g.gain.exponentialRampToValueAtTime(.028, ctx.currentTime+.01);
+    g.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime+.12);
+    o.stop(ctx.currentTime+.13);
+  }catch(e){}
+}
+function clearTimer(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+function updateTimerUI(){
+  const el=$('bigTimer');
+  if(!el) return;
+  el.textContent=String(timeLeft);
+  el.classList.remove('timer-warn','timer-danger');
+  if(timeLeft<=3) el.classList.add('timer-danger');
+  else if(timeLeft<=5) el.classList.add('timer-warn');
+}
+function handleTimeUp(){
+  clearTimer();
+  if(state==='post') return;
+  state='post';
+  overlay('⏰');
+  failSound();
+  $('feedback').innerHTML=`หมดเวลา! คำที่ถูกคือ <b>${currentQ.target.word}</b> = <b>${currentQ.target.thai}</b>`;
+  arena.querySelectorAll('.meaning-burst').forEach(el=>el.remove());
+  orbs.forEach(o=>o.el.classList.add('locked'));
+  answeredWords.push({word:currentQ.target.word,thai:currentQ.target.thai});
+  $('btnNext').style.display='inline-flex';
+}
+function startTimer(){
+  clearTimer();
+  timeLeft=11;
+  updateTimerUI();
+  timerInterval=setInterval(()=>{
+    timeLeft--;
+    updateTimerUI();
+    if(timeLeft<=3 && timeLeft>0) tickBeep();
+    if(timeLeft<=0) handleTimeUp();
+  },1000);
+}
+
+function updateHud(){ $('hudName').textContent=`👤 Explorer: ${player}`; $('hudRound').textContent=`🪐 Signal ${currentIndex+1} / 30`; $('hudScore').textContent=`⭐ Score ${score} / 60`; }
+function updateProgress(){ const pct=Math.round((currentIndex/30)*100); $('progressFill').style.width=pct+'%'; $('progressLabel').textContent = pct===100 ? '🌌 A2 COMPLETE' : pct>=80 ? `⚡ ALMOST COMPLETE ${pct}%` : `Mission Progress ${pct}%`; $('progressCount').textContent=`${currentIndex} / 30`; }
+
+function createQuestion(target){ const distractors = shuffle(pool.filter(x=>x.word!==target.word)).slice(0,3); const choices = shuffle([target, ...distractors]); const meanings = shuffle([target.thai, ...shuffle(pool.filter(x=>x.word!==target.word).map(x=>x.thai)).slice(0,2)]);
+ return {target, choices, meanings}; }
+
+function makeOrb(item, label){ const div=document.createElement('button'); div.className='orb'; div.innerHTML=`<span class="choice-badge">${label}</span><span class="orb-label">${item.word}</span><span class="trail"></span>`; arena.appendChild(div); const rect=arena.getBoundingClientRect(); const size = window.innerWidth <= 560 ? 116 : window.innerWidth <= 950 ? 148 : 202; const x=Math.random()*Math.max(1, rect.width-size); const y=Math.random()*Math.max(1, rect.height-size); return {el:div, item, x, y, vx:(Math.random()*1.7+0.95)*(Math.random()>.5?1:-1), vy:(Math.random()*1.7+0.95)*(Math.random()>.5?1:-1), size}; }
+function renderRound(){ state='chooseWord'; $('btnNext').style.display='none'; $('feedback').textContent='เสียงจะเล่นอัตโนมัติ ฟังแล้วเลือกลูกบอลคำได้เลย';  arena.querySelectorAll('.orb,.meaning-burst,.burst-core').forEach(el=>el.remove()); currentQ=createQuestion(gameSet[currentIndex]); orbs=currentQ.choices.map((c,i)=>makeOrb(c,String.fromCharCode(65+i))); orbs.forEach(o=>o.el.onclick=()=>handleOrbClick(o)); cancelAnimationFrame(animId); animateOrbs(); updateHud(); updateProgress(); startTimer(); setTimeout(()=>{ if(currentQ && state==='chooseWord') speak(currentQ.target.word,.82); },180); }
+function animateOrbs(){ const w=arena.clientWidth, h=arena.clientHeight; for(let i=0;i<orbs.length;i++){ const a=orbs[i]; a.x+=a.vx; a.y+=a.vy; if(a.x<=0 || a.x+a.size>=w){a.vx*=-1; a.x=Math.max(0, Math.min(a.x,w-a.size));} if(a.y<=0 || a.y+a.size>=h){a.vy*=-1; a.y=Math.max(0, Math.min(a.y,h-a.size));}
+ for(let j=i+1;j<orbs.length;j++){ const b=orbs[j]; const ax=a.x+a.size/2, ay=a.y+a.size/2, bx=b.x+b.size/2, by=b.y+b.size/2; const dx=bx-ax, dy=by-ay; const dist=Math.hypot(dx,dy); const min=(a.size+b.size)/2-6; if(dist && dist<min){ [a.vx,b.vx]=[b.vx,a.vx]; [a.vy,b.vy]=[b.vy,a.vy]; const overlap=(min-dist)/2; const nx=dx/dist, ny=dy/dist; a.x-=nx*overlap; a.y-=ny*overlap; b.x+=nx*overlap; b.y+=ny*overlap; }} a.el.style.setProperty('--tx',`${a.x}px`); a.el.style.setProperty('--ty',`${a.y}px`); a.el.style.transform=`translate(${a.x}px,${a.y}px)`; }
+ animId=requestAnimationFrame(animateOrbs); }
+function handleOrbClick(orb){ if(state!=='chooseWord') return; clickSound();  if(orb.item.word===currentQ.target.word){ state='chooseMeaning'; successSound(); overlay('💥'); $('feedback').textContent=`ถูกต้อง! ${orb.item.word}`; burstOrb(orb); } else { clearTimer(); state='post'; failSound(); overlay('😵'); $('feedback').innerHTML=`ยังไม่ใช่จ้า คำที่ถูกคือ <b>${currentQ.target.word}</b>`; orbs.forEach(o=>o.el.classList.add('locked')); answeredWords.push({word:currentQ.target.word,thai:currentQ.target.thai}); $('btnNext').style.display='inline-flex'; } }
+function burstOrb(orb){ orbs.forEach(o=>{ if(o!==orb) o.el.classList.add('locked'); }); orb.el.classList.add('burst'); const core=document.createElement('div'); core.className='burst-core'; core.textContent='🧞'; core.style.width=orb.size+'px'; core.style.height=orb.size+'px'; core.style.left=orb.x+'px'; core.style.top=orb.y+'px'; arena.appendChild(core); setTimeout(()=>showMeanings(orb),260); }
+function showMeanings(orb){ arena.querySelectorAll('.meaning-burst').forEach(el=>el.remove()); const box=document.createElement('div'); box.className='meaning-burst'; const top = Math.min(arena.clientHeight-170, Math.max(14, orb.y + orb.size/2 - 70)); const left = Math.min(arena.clientWidth - Math.min(240, arena.clientWidth*0.78) - 10, Math.max(10, orb.x + orb.size/2 - 110)); box.style.left=left+'px'; box.style.top=top+'px'; currentQ.meanings.forEach(th=>{ const btn=document.createElement('button'); btn.className='meaning-btn'; btn.textContent=th; btn.onclick=()=>handleMeaning(th); box.appendChild(btn); }); arena.appendChild(box); $('feedback').innerHTML='เลือกรอบสอง: กดความหมายที่ถูกต้องจากจุดเดิมได้เลย ✨'; }
+function handleMeaning(th){ if(state!=='chooseMeaning') return; clearTimer(); clickSound(); answeredWords.push({word:currentQ.target.word,thai:currentQ.target.thai}); if(th===currentQ.target.thai){ score+=2; successSound(); overlay('✨'); $('feedback').innerHTML=`เยี่ยมมาก! <b>${currentQ.target.word}</b> = <b>${currentQ.target.thai}</b> ได้ 2 คะแนน`; arena.querySelectorAll('.orb,.meaning-burst,.burst-core').forEach(el=>el.remove()); } else { failSound(); overlay('🙂'); $('feedback').innerHTML=`เกือบแล้วจ้า คำที่ถูกคือ <b>${currentQ.target.thai}</b> แต่ข้อนี้ได้ 0 คะแนน`; const mb=arena.querySelector('.meaning-burst'); if(mb){ [...mb.children].forEach(btn=>{ if(btn.textContent===currentQ.target.thai){ btn.classList.add('correct'); } else { btn.classList.add('wrong'); } }); } }
+ state='post'; $('btnNext').style.display='inline-flex'; }
+function nextRound(){ currentIndex++; if(currentIndex>=30){ showSummary(); } else { renderRound(); } }
+function showSummary(){ clearTimer(); cancelAnimationFrame(animId); $('sumName').textContent=player; $('sumScore').textContent=`${score} / 60`; $('sumText').textContent = score>=46 ? 'ฟังแม่นมาก พร้อมไป A3 ต่อได้เลย' : score>=30 ? 'ทำได้ดีมาก ลองเล่นซ้ำอีกรอบแล้วจะยิ่งนิ่งขึ้น' : 'เริ่มจับเสียงได้แล้ว ฝึกอีกนิดจะเก่งขึ้นเร็วมาก'; const summaryHtml = answeredWords.slice(0,12).map(w=>`<div class="word-chip seen"><b>${w.word}</b><div class="small">${w.thai}</div></div>`).join(''); $('summaryWords').innerHTML=summaryHtml; updateProgress(); $('progressFill').style.width='100%'; showScreen('screenSummary'); }
+function startGame(){ clearTimer(); speechSynthesis.cancel(); player=$('playerName').value.trim() || 'Galaxy Explorer'; gameSet = shuffle(pool).slice(0,30); currentIndex=0; score=0; answeredWords=[]; showScreen('screenGame'); renderRound(); }
+
+$('btnHow').onclick=()=>{clickSound(); showScreen('screenHow');};
+$('btnBackHome').onclick=()=>{clickSound(); showScreen('screenStart');};
+$('btnStart').onclick=()=>{clickSound(); startGame();};
+$('btnStart2').onclick=()=>{clickSound(); startGame();};
+$('btnHome').onclick=()=>{clickSound(); clearTimer(); speechSynthesis.cancel(); cancelAnimationFrame(animId); showScreen('screenStart');};
+$('btnHome2').onclick=()=>{clickSound(); showScreen('screenStart');};
+$('btnAgain').onclick=()=>{clickSound(); startGame();};
+$('btnListen').onclick=()=>{clickSound(); if(currentQ) speak(currentQ.target.word,.82); $('feedback').textContent='เล่นเสียงซ้ำให้แล้ว ฟังอีกครั้งได้เลย'; };
+$('btnSlow').onclick=()=>{clickSound(); if(currentQ) speak(currentQ.target.word,.52); $('feedback').textContent='โหมด Slow Signal เปิดแล้ว ฟังช้าได้แม้เวลากำลังเดิน'; };
+$('btnNext').onclick=()=>{clickSound(); clearTimer(); nextRound();};
+
+initStars();
+</script>
+</body>
+</html>
